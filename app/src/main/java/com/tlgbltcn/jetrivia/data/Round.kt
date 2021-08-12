@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Round(
     @SerialName("response_code")
-    val responseCode: Int?, // 0
+    val responseCode: Int? = 0, // 0
     @SerialName("results")
-    val trivias: List<Trivia>?
+    val trivias: List<Trivia>? = listOf()
 )
