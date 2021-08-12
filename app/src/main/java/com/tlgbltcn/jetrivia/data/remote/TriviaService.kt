@@ -1,6 +1,6 @@
 package com.tlgbltcn.jetrivia.data.remote
 
-import com.tlgbltcn.jetrivia.data.Round
+import com.tlgbltcn.jetrivia.data.model.Round
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

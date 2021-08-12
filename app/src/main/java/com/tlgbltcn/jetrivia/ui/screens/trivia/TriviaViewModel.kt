@@ -1,6 +1,6 @@
-package com.tlgbltcn.jetrivia.ui
+package com.tlgbltcn.jetrivia.ui.screens.trivia
 
-import com.tlgbltcn.jetrivia.data.Round
+import com.tlgbltcn.jetrivia.data.model.Round
 import com.tlgbltcn.jetrivia.data.repository.TriviaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +19,7 @@ class TriviaViewModel @Inject constructor(private val repository: TriviaReposito
         fetchTrivia()
     }
 
-    fun fetchTrivia() = viewModelScope.launch {
+    private fun fetchTrivia() = viewModelScope.launch {
         repository.fetchTriviaSet().collect {
             when (it) {
                 is Round -> {
@@ -28,6 +28,4 @@ class TriviaViewModel @Inject constructor(private val repository: TriviaReposito
             }
         }
     }
-
-
 }
