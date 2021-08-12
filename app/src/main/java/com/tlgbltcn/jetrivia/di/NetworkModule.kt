@@ -1,7 +1,9 @@
 package com.tlgbltcn.jetrivia.di
 
 import android.content.Context
-import coil.util.CoilUtils
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.chuckerteam.chucker.api.RetentionManager
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.tlgbltcn.jetrivia.BuildConfig
 import com.tlgbltcn.jetrivia.data.remote.TriviaService
@@ -29,6 +31,22 @@ object NetworkModule {
     fun provideLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
+    @Singleton
+    @Provides
+    fun provideChuckerInterceptor(@ApplicationContext context: Context): ChuckerInterceptor {
+        val chuckerCollector = ChuckerCollector(
+            context = context,
+            showNotification = true,
+            retentionPeriod = RetentionManager.Period.ONE_HOUR
+        )
+
+        return with(ChuckerInterceptor.Builder(context)) {
+            collector(chuckerCollector)
+            maxContentLength(250_000L)
+            build()
+        }
+    }
+
     @Provides
     @Singleton
     fun provideJson(): Json = Json {
@@ -39,11 +57,12 @@ object NetworkModule {
     @Provides
     fun provideOkHttpClient(
         @ApplicationContext context: Context,
+        chuckerInterceptor: ChuckerInterceptor,
         loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
         return with(OkHttpClient.Builder()) {
+            addInterceptor(chuckerInterceptor)
             addInterceptor(loggingInterceptor)
-            cache(CoilUtils.createDefaultCache(context))
             build()
         }
     }
