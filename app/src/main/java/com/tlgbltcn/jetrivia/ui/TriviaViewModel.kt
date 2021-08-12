@@ -1,6 +1,6 @@
 package com.tlgbltcn.jetrivia.ui
 
-import com.tlgbltcn.jetrivia.data.Round
+import com.tlgbltcn.jetrivia.data.model.Round
 import com.tlgbltcn.jetrivia.data.repository.TriviaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

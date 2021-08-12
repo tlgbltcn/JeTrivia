@@ -10,7 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.tlgbltcn.jetrivia.data.Round
+import com.tlgbltcn.jetrivia.data.model.Round
 import com.tlgbltcn.jetrivia.ui.TriviaViewModel
 import com.tlgbltcn.jetrivia.ui.theme.JeTriviaTheme
 import dagger.hilt.android.AndroidEntryPoint
