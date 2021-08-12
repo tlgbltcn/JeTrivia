@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">JeTrivia</string>
+
+    <string name="main_screen">Main</string>
+    <string name="trivia_screen">Trivia</string>
+    <string name="statistic_screen">Statistics</string>
 </resources>

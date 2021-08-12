@@ -51,6 +51,7 @@ object NetworkModule {
     @Singleton
     fun provideJson(): Json = Json {
         isLenient = true
+        ignoreUnknownKeys = true
     }
 
     @Singleton
