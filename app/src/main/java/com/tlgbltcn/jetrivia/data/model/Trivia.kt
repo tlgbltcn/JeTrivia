@@ -1,11 +1,13 @@
 package com.tlgbltcn.jetrivia.data.model
 
 import androidx.room.*
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
+import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.serialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
 
 @Serializable
@@ -38,8 +40,29 @@ data class Trivia(
     @SerialName("question")
     val question: String, // In South Park, what is Stan&#039;s surname?
     @SerialName("type")
-    val type: String // multiple
+    val type: String, // multiple
+    @Transient
+    var status: Status = Status.IDLE
 ) {
+
+    enum class Status {
+        IDLE,
+        CORRECT,
+        WRONG
+    }
+
+    @ExperimentalSerializationApi
+    @Serializer(forClass = Status::class)
+    object LintSeveritySerializer : KSerializer<Status> {
+        override val descriptor: SerialDescriptor = serialDescriptor<String>()
+        override fun serialize(output: Encoder, obj: Status) {
+            output.encodeString(obj.toString().lowercase())
+        }
+
+        override fun deserialize(input: Decoder): Status {
+            return Status.valueOf(input.decodeString().uppercase())
+        }
+    }
 
     object Converter {
 
@@ -52,6 +75,16 @@ data class Trivia(
         @TypeConverter
         fun toList(value: String) =
             Json.decodeFromString(ListSerializer(String.serializer()), value)
+
+        @ExperimentalSerializationApi
+        @JvmStatic
+        @TypeConverter
+        fun fromStatus(value: Status) = Json.encodeToString(LintSeveritySerializer, value)
+
+        @ExperimentalSerializationApi
+        @JvmStatic
+        @TypeConverter
+        fun toStatus(value: String) = Json.decodeFromString(LintSeveritySerializer, value)
     }
 
     companion object {

@@ -14,11 +14,11 @@ suspend fun <T> ResultHolder<T>.onOperation(
 ) {
     when (this) {
         is ResultHolder.Success -> {
-            onSuccess(this)
+            onSuccess.invoke(this)
         }
 
         is ResultHolder.Failure -> {
-            onFailure(this)
+            onFailure.invoke(this)
         }
 
         is ResultHolder.Loading -> {
@@ -26,7 +26,6 @@ suspend fun <T> ResultHolder<T>.onOperation(
         }
     }
 }
-
 
 fun <T> success(data: T): ResultHolder<T> {
     return ResultHolder.Success(data)

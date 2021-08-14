@@ -3,6 +3,7 @@ package com.tlgbltcn.jetrivia.data.repository
 import com.tlgbltcn.jetrivia.data.local.RoundDao
 import com.tlgbltcn.jetrivia.data.local.TriviaDao
 import com.tlgbltcn.jetrivia.data.model.Round
+import com.tlgbltcn.jetrivia.data.model.Trivia
 import com.tlgbltcn.jetrivia.data.remote.TriviaService
 import com.tlgbltcn.jetrivia.util.*
 import kotlinx.coroutines.Dispatchers
@@ -18,13 +19,19 @@ class TriviaRepository @Inject constructor(
     private val triviaDao: TriviaDao
 ) {
 
-    fun fetchTriviaSet() = flow {
+    fun fetchTrivia() = flow {
         apiCall {
             remoteService.getQuestionSet()
         }.onOperation(
             onSuccess = data@{
                 this@data.data.populateLocalDataSources()
-                emit(ResultHolder.Success(roundDao.getRoundsWithTrivia()))
+                emit(
+                    success(
+                        roundDao
+                            .getRoundsWithTrivia()
+                            .last()
+                    )
+                )
             },
 
             onFailure = error@{
@@ -47,4 +54,33 @@ class TriviaRepository @Inject constructor(
             }
         }
     }
+
+    fun updateJoker(joker: String) {
+        val round = getActualRound()
+        val jokers = mutableMapOf<String, Boolean>()
+        round.jokers.forEach {
+            if (it.key == joker) {
+                jokers[it.key] = false
+            } else {
+                jokers[it.key] = it.value
+            }
+        }
+
+        updateRound(round = round.copy(jokers = jokers))
+    }
+
+    fun finishRound() {
+        val round = getActualRound()
+        updateRound(round = round.copy(isCompleted = true))
+    }
+
+    fun updateTrivia(trivia: Trivia) {
+        triviaDao.updateTrivia(trivia = trivia)
+    }
+
+    private fun updateRound(round: Round) {
+        roundDao.updateRound(round = round)
+    }
+
+    private fun getActualRound() = roundDao.getActualRound()
 }
