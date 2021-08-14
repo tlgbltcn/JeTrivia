@@ -9,12 +9,24 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 
 @Serializable
-@Entity(tableName = Trivia.TABLE_NAME)
+@Entity(
+    tableName = Trivia.TABLE_NAME, foreignKeys = [
+        ForeignKey(
+            entity = Round::class,
+            parentColumns = ["round_id"],
+            childColumns = ["round_creator_id"],
+            onDelete = ForeignKey.CASCADE,
+        )
+    ], indices = [Index("round_creator_id")]
+)
 data class Trivia(
     @Transient
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "trivia_id")
     var triviaId: Long? = null,
+    @Transient
+    @ColumnInfo(name = "round_creator_id")
+    val roundCreatorId: Long? = null,
     @SerialName("category")
     val category: String?, // Entertainment: Cartoon & Animations
     @SerialName("correct_answer")

@@ -17,7 +17,9 @@ data class Round(
     var roundId: Long? = null,
     @Ignore
     @SerialName("results")
-    val trivias: List<Trivia>? = listOf()
+    val trivias: List<Trivia>? = listOf(),
+    @Transient
+    var isCompleted: Boolean = false,
 ) {
 
     companion object {
