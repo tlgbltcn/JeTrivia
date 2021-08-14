@@ -28,17 +28,17 @@ data class Trivia(
     @ColumnInfo(name = "round_creator_id")
     val roundCreatorId: Long? = null,
     @SerialName("category")
-    val category: String?, // Entertainment: Cartoon & Animations
+    val category: String, // Entertainment: Cartoon & Animations
     @SerialName("correct_answer")
-    val correctAnswer: String?, // Marsh
+    val correctAnswer: String, // Marsh
     @SerialName("difficulty")
-    val difficulty: String?, // easy
+    val difficulty: String, // easy
     @SerialName("incorrect_answers")
-    val incorrectAnswers: List<String>?,
+    val incorrectAnswers: List<String>,
     @SerialName("question")
-    val question: String?, // In South Park, what is Stan&#039;s surname?
+    val question: String, // In South Park, what is Stan&#039;s surname?
     @SerialName("type")
-    val type: String? // multiple
+    val type: String // multiple
 ) {
 
     object Converter {
@@ -55,6 +55,6 @@ data class Trivia(
     }
 
     companion object {
-        const val TABLE_NAME = "round"
+        const val TABLE_NAME = "trivia"
     }
 }
