@@ -1,11 +1,39 @@
 package com.tlgbltcn.jetrivia.util
 
-import retrofit2.Response
 
-// In Progress
-
-sealed class ResultHolder {
-    data class Success(val data: Response<*>) : ResultHolder()
-    data class Failure(val message: String) : ResultHolder()
-    object Loading : ResultHolder()
+sealed class ResultHolder<out T> {
+    data class Success<T>(val data: T) : ResultHolder<T>()
+    object Loading : ResultHolder<Nothing>()
+    data class Failure(val message: String? = null) : ResultHolder<Nothing>()
 }
+
+suspend fun <T> ResultHolder<T>.onOperation(
+    onSuccess: suspend ResultHolder.Success<T>.() -> Unit,
+    onFailure: suspend ResultHolder.Failure.() -> Unit,
+    onLoading: suspend (() -> Unit)
+) {
+    when (this) {
+        is ResultHolder.Success -> {
+            onSuccess(this)
+        }
+
+        is ResultHolder.Failure -> {
+            onFailure(this)
+        }
+
+        is ResultHolder.Loading -> {
+            onLoading.invoke()
+        }
+    }
+}
+
+
+fun <T> success(data: T): ResultHolder<T> {
+    return ResultHolder.Success(data)
+}
+
+fun failure(message: String?): ResultHolder<Nothing> {
+    return ResultHolder.Failure(message = message)
+}
+
+fun loading() = ResultHolder.Loading

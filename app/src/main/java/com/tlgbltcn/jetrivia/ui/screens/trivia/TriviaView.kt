@@ -41,7 +41,7 @@ fun TriviaView(
             }
 
             is ResultHolder.Success -> {
-                Text(text = "${round.data.body()}")
+                Text(text = "${round.data}")
             }
 
             is ResultHolder.Failure -> {
