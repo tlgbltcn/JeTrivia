@@ -7,7 +7,7 @@ import com.tlgbltcn.jetrivia.data.model.Round
 import com.tlgbltcn.jetrivia.data.model.Trivia
 
 @Database(entities = [Round::class, Trivia::class], version = 1)
-@TypeConverters(value = [Trivia.Converter::class])
+@TypeConverters(value = [Round.Converter::class, Trivia.Converter::class])
 abstract class TriviaDatabase : RoomDatabase() {
 
     abstract fun roundDao(): RoundDao

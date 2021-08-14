@@ -1,8 +1,14 @@
 package com.tlgbltcn.jetrivia.data.local
 
 import androidx.room.*
+import com.tlgbltcn.jetrivia.data.model.Trivia
 
 @Dao
 interface TriviaDao {
-    // it will be implemented
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertTrivia(trivia: Trivia)
+
+    @Update
+    fun updateTrivia(trivia: Trivia)
 }
