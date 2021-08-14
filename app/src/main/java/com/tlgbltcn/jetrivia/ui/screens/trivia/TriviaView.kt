@@ -6,11 +6,21 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
-import com.tlgbltcn.jetrivia.data.model.Round
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.tlgbltcn.jetrivia.R
+import com.tlgbltcn.jetrivia.data.model.Round.Companion.EXTRA_TIME
+import com.tlgbltcn.jetrivia.data.model.Round.Companion.FIFTY_FIFTY
+import com.tlgbltcn.jetrivia.data.model.Round.Companion.SKIP
+import com.tlgbltcn.jetrivia.data.model.Trivia
+import com.tlgbltcn.jetrivia.ui.component.JokerRow
 import com.tlgbltcn.jetrivia.ui.component.Loading
+import com.tlgbltcn.jetrivia.ui.component.Question
+import com.tlgbltcn.jetrivia.ui.component.Timer
 import com.tlgbltcn.jetrivia.ui.navigation.MainActions
 import com.tlgbltcn.jetrivia.util.ResultHolder
 
@@ -23,34 +33,83 @@ fun TriviaView(
 
     val round = viewModel.trivia.collectAsState().value
 
-    val modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight()
+    viewModel.isComplete.collectAsState().also {
+        if (it.value) actions.navigateBack()
+    }
 
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = stringResource(id = R.string.trivia_screen)) },
+                backgroundColor = Color.White,
+                elevation = 4.dp,
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            actions.navigateBack()
+                        }
+                    ) {
+                        val backIcon: Painter =
+                            painterResource(id = R.drawable.ic_baseline_arrow_back_24)
+                        Icon(
+                            painter = backIcon,
+                            contentDescription = null,
+                            tint = Color.Black
+                        )
+                    }
+                }
+            )
+        },
     ) {
-
-        // In Progress
-
         when (round) {
             is ResultHolder.Loading -> {
                 Loading()
             }
 
             is ResultHolder.Success -> {
-                Text(text = "${round.data.body()}")
+                Column {
+                    Timer(
+                        viewModel = viewModel,
+                        onFinished = {
+                            viewModel.getNextQuestion()
+                        }
+                    )
+
+                    JokerRow(
+                        onFiftyFiftyClicked = {
+                            viewModel.updateJoker(FIFTY_FIFTY)
+                            viewModel.fiftyFifty()
+                        },
+                        onSkipClicked = {
+                            viewModel.updateJoker(SKIP)
+                            viewModel.skip()
+                        },
+                        onExtraTimeClicked = {
+                            viewModel.updateJoker(EXTRA_TIME)
+                            viewModel.addExtraTime()
+                        }
+                    )
+                    Question(
+                        data = round.data,
+                        onAnswerSelected = { trivia: Trivia, answer: Boolean ->
+                            viewModel.updateTrivia(
+                                trivia.copy(
+                                    status =
+                                    if (answer) Trivia.Status.CORRECT
+                                    else Trivia.Status.WRONG
+                                )
+                            )
+                        }
+                    )
+                }
             }
 
             is ResultHolder.Failure -> {
-                showMessage(context = context, "${round.message}")
+                showMessage(context = context, message = "${round.message}")
             }
         }
     }
 }
-
 
 fun showMessage(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
