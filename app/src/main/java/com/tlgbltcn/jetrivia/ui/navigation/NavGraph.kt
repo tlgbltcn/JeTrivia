@@ -19,7 +19,7 @@ fun NavGraph() {
     val navController = rememberNavController()
     val actions = remember(navController) { MainActions(navController) }
 
-    NavHost(navController, startDestination = Screen.Trivia.route) {
+    NavHost(navController, startDestination = Screen.Main.route) {
 
         composable(Screen.Main.route) {
             MainView(
