@@ -119,7 +119,7 @@ class TriviaViewModel @Inject constructor(private val repository: TriviaReposito
     private fun stopTimer() = job?.cancel()
 
     companion object {
-        const val QUESTION_THRESHOLD = 9
+        const val QUESTION_THRESHOLD = 10
         const val SECOND = 1000L
         const val EXTRA_TIME = 10
     }
