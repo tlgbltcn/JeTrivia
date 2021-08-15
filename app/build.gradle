@@ -123,4 +123,6 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:$arch_core_test_version"
     testImplementation "com.google.truth:truth:$truth_version"
     testImplementation "androidx.test.ext:truth:$truth_ext_version"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$mock_web_server_version"
+
 }
