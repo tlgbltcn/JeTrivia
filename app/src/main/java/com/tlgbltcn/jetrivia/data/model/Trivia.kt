@@ -53,7 +53,7 @@ data class Trivia(
 
     @ExperimentalSerializationApi
     @Serializer(forClass = Status::class)
-    object LintSeveritySerializer : KSerializer<Status> {
+    object StatusSerializer : KSerializer<Status> {
         override val descriptor: SerialDescriptor = serialDescriptor<String>()
         override fun serialize(output: Encoder, obj: Status) {
             output.encodeString(obj.toString().lowercase())
@@ -79,12 +79,12 @@ data class Trivia(
         @ExperimentalSerializationApi
         @JvmStatic
         @TypeConverter
-        fun fromStatus(value: Status) = Json.encodeToString(LintSeveritySerializer, value)
+        fun fromStatus(value: Status) = Json.encodeToString(StatusSerializer, value)
 
         @ExperimentalSerializationApi
         @JvmStatic
         @TypeConverter
-        fun toStatus(value: String) = Json.decodeFromString(LintSeveritySerializer, value)
+        fun toStatus(value: String) = Json.decodeFromString(StatusSerializer, value)
     }
 
     companion object {

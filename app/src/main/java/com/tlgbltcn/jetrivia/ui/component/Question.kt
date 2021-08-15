@@ -93,7 +93,10 @@ fun Question(
                                 }
                             )
                             .background(answerBackgroundColor)
-                            .padding(vertical = 20.dp, horizontal = 20.dp),
+                            .padding(
+                                vertical = 20.dp,
+                                horizontal = 20.dp
+                            ),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {

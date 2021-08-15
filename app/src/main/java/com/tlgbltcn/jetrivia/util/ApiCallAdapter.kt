@@ -9,15 +9,15 @@ suspend fun <T> apiCall(block: suspend () -> Response<T>): ResultHolder<T> {
         val response = block.invoke()
         if (response.isSuccessful) {
             response.body()?.let { body ->
-                success(body)
+                Success(body)
             }
-                ?: failure(message = "code: ${response.code()} message: ${response.message()}")
+                ?: Failure(message = "code: ${response.code()} message: ${response.message()}")
         } else {
-            failure(
+            Failure(
                 message = "code: ${response.code()} message: ${response.message()}"
             )
         }
     } catch (e: Exception) {
-        failure(message = "exception message: ${e.message} ")
+        Failure(message = "${e.message} ")
     }
 }
