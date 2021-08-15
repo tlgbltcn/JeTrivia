@@ -4,6 +4,7 @@ import android.os.Build
 import org.robolectric.annotation.Config
 import com.tlgbltcn.jetrivia.data.local.*
 import com.tlgbltcn.jetrivia.data.remote.TriviaServiceTest
+import com.tlgbltcn.jetrivia.data.repository.TriviaRepositoryTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.serialization.ExperimentalSerializationApi
 import org.junit.runner.RunWith
@@ -16,6 +17,7 @@ import org.junit.runners.Suite
 @Suite.SuiteClasses(
     RoundDaoTest::class,
     TriviaDaoTest::class,
-    TriviaServiceTest::class
+    TriviaServiceTest::class,
+    TriviaRepositoryTest::class
 )
 class TestSuite
