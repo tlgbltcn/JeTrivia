@@ -21,6 +21,7 @@ Fetching data from the network via repository pattern and saving them to local d
 - [Accompanist](https://github.com/google/accompanist) is a collection of extension libraries for Jetpack Compose applications.
 - [Retrofit2](https://github.com/square/retrofit) REST APIs.
 - [OkHttp3](https://github.com/square/okhttp) is used to implementing interceptor, logging web server.
+- [kotlinx.serialization](https://kotlinlang.org/docs/serialization.html) is used to process of converting data used by an application to a format that can be transferred over a network or stored in a database or a file.
 - [Chucker](https://github.com/ChuckerTeam/chucker) is inspection of HTTP(S) requests/responses
 - [MockK](https://github.com/mockk/mockk) is a test framework.
 - [Truth](https://github.com/google/truth) makes your test assertions and failure messages more readable.
