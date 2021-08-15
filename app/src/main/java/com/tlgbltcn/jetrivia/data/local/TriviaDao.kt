@@ -11,4 +11,7 @@ interface TriviaDao {
 
     @Update
     fun updateTrivia(trivia: Trivia)
+
+    @Query("SELECT * FROM trivia")
+    fun getTriviaList(): List<Trivia>
 }
