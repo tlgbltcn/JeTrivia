@@ -11,10 +11,10 @@ import org.junit.Rule
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-abstract class BaseDatabaseTest {
+open class BaseDatabaseTest {
 
     @get:Rule
-    val instantExecutorRule = InstantTaskExecutorRule()
+    var instantTaskExecutor = InstantTaskExecutorRule()
 
     lateinit var database: TriviaDatabase
 
@@ -25,6 +25,7 @@ abstract class BaseDatabaseTest {
                 ApplicationProvider.getApplicationContext(),
                 TriviaDatabase::class.java
             )
+                .allowMainThreadQueries()
                 .build()
 
         fillDao()
@@ -38,5 +39,4 @@ abstract class BaseDatabaseTest {
     open fun fillDao() {
         // no-op
     }
-
 }

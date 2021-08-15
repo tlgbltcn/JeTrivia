@@ -44,7 +44,7 @@ class RoundDaoTest : BaseDatabaseTest() {
     }
 
     @Test
-    fun testRecordedCount() {
+    fun `test when round recorded verify count`() {
         // Then
         Truth.assertThat(
             roundDao.getRoundsWithTrivia().size
@@ -54,7 +54,7 @@ class RoundDaoTest : BaseDatabaseTest() {
     }
 
     @Test
-    fun testGetActualRound() {
+    fun `test when getActualRound executed the last item should return`() {
 
         // When
         val value: Round = roundDao.getActualRound()
@@ -64,7 +64,7 @@ class RoundDaoTest : BaseDatabaseTest() {
     }
 
     @Test
-    fun testGetRounds() {
+    fun `test combined tables`() {
 
         // When
         val value: List<RoundAndTrivia> = roundDao.getRoundsWithTrivia()
@@ -81,7 +81,7 @@ class RoundDaoTest : BaseDatabaseTest() {
     }
 
     @Test
-    fun testUpdateRound() {
+    fun `test when updated method executed the new value should be correct`() {
         // Given
         val round = Round(
             roundId = 10,

@@ -1,9 +1,7 @@
 package com.tlgbltcn.jetrivia.data.local
 
-
 import com.tlgbltcn.jetrivia.data.model.Round
 import com.google.common.truth.Truth
-import com.tlgbltcn.jetrivia.data.model.RoundAndTrivia
 import com.tlgbltcn.jetrivia.data.model.Trivia
 import org.junit.Test
 
@@ -44,7 +42,7 @@ class TriviaDaoTest : BaseDatabaseTest() {
     }
 
     @Test
-    fun testRecordedCount() {
+    fun `test recorded value is correct or not`() {
         // Then
         Truth.assertThat(
             triviaDao.getTriviaList().size
@@ -54,7 +52,7 @@ class TriviaDaoTest : BaseDatabaseTest() {
     }
 
     @Test
-    fun testUpdateTrivia() {
+    fun `test when updated method executed the new value should be correct`() {
         // Given
         val round = Round(
             roundId = 10,

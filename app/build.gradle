@@ -90,6 +90,7 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$serialization_version"
     implementation "io.coil-kt:coil-compose:$coil_version"
+    implementation 'com.google.ar:core:1.23.0'
     debugImplementation "com.github.chuckerteam.chucker:library:$chucker_version"
 
     // Asynchronous
@@ -113,10 +114,13 @@ dependencies {
 
     // Test
     testImplementation "junit:junit:$junit_version"
-    androidTestImplementation "io.mockk:mockk:$mockk_version"
-    androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
+    testImplementation "androidx.test.ext:junit:$junit_ext_version"
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "org.robolectric:robolectric:4.6.1"
+    androidTestImplementation "androidx.test:runner:1.4.0"
+    androidTestImplementation "androidx.test:rules:1.4.0"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
-    androidTestImplementation "androidx.arch.core:core-testing:$arch_core_test_version"
-    androidTestImplementation "com.google.truth:truth:$truth_version"
-    androidTestImplementation "androidx.test.ext:truth:$truth_ext_version"
+    testImplementation "androidx.arch.core:core-testing:$arch_core_test_version"
+    testImplementation "com.google.truth:truth:$truth_version"
+    testImplementation "androidx.test.ext:truth:$truth_ext_version"
 }
