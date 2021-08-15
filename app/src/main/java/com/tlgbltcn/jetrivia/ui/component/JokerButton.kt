@@ -15,7 +15,9 @@ import com.tlgbltcn.jetrivia.R
 @Composable
 fun JokerButton(
     onClick: (() -> Unit)? = null,
-    @StringRes text: Int
+    @StringRes text: Int,
+    isPreview: Boolean = false,
+    previewValue: Boolean = true,
 ) {
 
     val mutableState = remember { mutableStateOf(true) }
@@ -28,12 +30,14 @@ fun JokerButton(
     Button(
         onClick = {
             mutableState.value = false
-            onClick?.invoke()
+            if (isPreview.not()) onClick?.invoke()
         },
         colors = mainButtonColor,
-        enabled = mutableState.value
+        enabled = if (isPreview.not()) mutableState.value else previewValue
     ) {
-        Text(text = stringResource(id = text))
+        Text(
+            text = stringResource(id = text)
+        )
     }
 }
 

@@ -1,4 +1,4 @@
-package com.tlgbltcn.jetrivia
+package com.tlgbltcn.jetrivia.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

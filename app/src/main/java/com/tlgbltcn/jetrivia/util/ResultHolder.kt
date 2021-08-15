@@ -1,6 +1,10 @@
 package com.tlgbltcn.jetrivia.util
 
 
+typealias Loading = ResultHolder.Loading
+typealias Success<T> = ResultHolder.Success<T>
+typealias Failure = ResultHolder.Failure
+
 sealed class ResultHolder<out T> {
     data class Success<T>(val data: T) : ResultHolder<T>()
     object Loading : ResultHolder<Nothing>()
@@ -8,31 +12,21 @@ sealed class ResultHolder<out T> {
 }
 
 suspend fun <T> ResultHolder<T>.onOperation(
-    onSuccess: suspend ResultHolder.Success<T>.() -> Unit,
-    onFailure: suspend ResultHolder.Failure.() -> Unit,
+    onSuccess: suspend Success<T>.() -> Unit,
+    onFailure: suspend Failure.() -> Unit,
     onLoading: suspend (() -> Unit)
 ) {
     when (this) {
-        is ResultHolder.Success -> {
+        is Success -> {
             onSuccess.invoke(this)
         }
 
-        is ResultHolder.Failure -> {
+        is Failure -> {
             onFailure.invoke(this)
         }
 
-        is ResultHolder.Loading -> {
+        is Loading -> {
             onLoading.invoke()
         }
     }
 }
-
-fun <T> success(data: T): ResultHolder<T> {
-    return ResultHolder.Success(data)
-}
-
-fun failure(message: String?): ResultHolder<Nothing> {
-    return ResultHolder.Failure(message = message)
-}
-
-fun loading() = ResultHolder.Loading

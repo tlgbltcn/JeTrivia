@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.tlgbltcn.jetrivia.ui.screens.main.MainView
 import com.tlgbltcn.jetrivia.ui.screens.trivia.TriviaView
 import com.tlgbltcn.jetrivia.ui.screens.statistic.StatisticView
+import com.tlgbltcn.jetrivia.ui.screens.statistic.StatisticViewModel
 import com.tlgbltcn.jetrivia.ui.screens.trivia.TriviaViewModel
 
 @Composable
@@ -19,7 +20,7 @@ fun NavGraph() {
     val navController = rememberNavController()
     val actions = remember(navController) { MainActions(navController) }
 
-    NavHost(navController, startDestination = Screen.Trivia.route) {
+    NavHost(navController, startDestination = Screen.Main.route) {
 
         composable(Screen.Main.route) {
             MainView(
@@ -38,7 +39,11 @@ fun NavGraph() {
         }
 
         composable(Screen.Statistics.route) {
+            val viewModel: StatisticViewModel = viewModel(
+                factory = HiltViewModelFactory(LocalContext.current, it)
+            )
             StatisticView(
+                viewModel = viewModel,
                 actions = actions
             )
         }

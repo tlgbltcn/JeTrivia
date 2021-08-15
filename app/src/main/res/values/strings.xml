@@ -5,6 +5,10 @@
     <string name="trivia_screen">Trivia</string>
     <string name="statistic_screen">Statistics</string>
 
+    <string name="play">Play</string>
+    <string name="jokers">Jokers</string>
+    <string name="question">Q. %1$s</string>
+    <string name="round">Round</string>
     <string name="fifty_fifty">50/50</string>
     <string name="skip">Skip</string>
     <string name="extra_time">Time</string>

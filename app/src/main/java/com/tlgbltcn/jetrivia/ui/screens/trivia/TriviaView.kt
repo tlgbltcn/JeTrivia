@@ -17,10 +17,7 @@ import com.tlgbltcn.jetrivia.data.model.Round.Companion.EXTRA_TIME
 import com.tlgbltcn.jetrivia.data.model.Round.Companion.FIFTY_FIFTY
 import com.tlgbltcn.jetrivia.data.model.Round.Companion.SKIP
 import com.tlgbltcn.jetrivia.data.model.Trivia
-import com.tlgbltcn.jetrivia.ui.component.JokerRow
-import com.tlgbltcn.jetrivia.ui.component.Loading
-import com.tlgbltcn.jetrivia.ui.component.Question
-import com.tlgbltcn.jetrivia.ui.component.Timer
+import com.tlgbltcn.jetrivia.ui.component.*
 import com.tlgbltcn.jetrivia.ui.navigation.MainActions
 import com.tlgbltcn.jetrivia.util.ResultHolder
 
@@ -29,8 +26,6 @@ fun TriviaView(
     viewModel: TriviaViewModel,
     actions: MainActions,
 ) {
-    val context = LocalContext.current
-
     val round = viewModel.trivia.collectAsState().value
 
     viewModel.isComplete.collectAsState().also {
@@ -105,12 +100,8 @@ fun TriviaView(
             }
 
             is ResultHolder.Failure -> {
-                showMessage(context = context, message = "${round.message}")
+                ErrorBox(message = round.message)
             }
         }
     }
-}
-
-fun showMessage(context: Context, message: String) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }

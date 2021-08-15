@@ -3,6 +3,7 @@ package com.tlgbltcn.jetrivia.data.repository
 import com.tlgbltcn.jetrivia.data.local.RoundDao
 import com.tlgbltcn.jetrivia.data.local.TriviaDao
 import com.tlgbltcn.jetrivia.data.model.Round
+import com.tlgbltcn.jetrivia.data.model.RoundAndTrivia
 import com.tlgbltcn.jetrivia.data.model.Trivia
 import com.tlgbltcn.jetrivia.data.remote.TriviaService
 import com.tlgbltcn.jetrivia.util.*
@@ -26,7 +27,7 @@ class TriviaRepository @Inject constructor(
             onSuccess = data@{
                 this@data.data.populateLocalDataSources()
                 emit(
-                    success(
+                    Success(
                         roundDao
                             .getRoundsWithTrivia()
                             .last()
@@ -35,11 +36,11 @@ class TriviaRepository @Inject constructor(
             },
 
             onFailure = error@{
-                emit(failure(this@error.message))
+                emit(Failure(this@error.message))
             },
 
             onLoading = {
-                emit(loading())
+                emit(Loading)
             }
         )
     }
@@ -83,4 +84,6 @@ class TriviaRepository @Inject constructor(
     }
 
     private fun getActualRound() = roundDao.getActualRound()
+
+    fun getRounds(): List<RoundAndTrivia> = roundDao.getRoundsWithTrivia()
 }

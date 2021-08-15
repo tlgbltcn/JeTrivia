@@ -6,10 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 import androidx.lifecycle.*
 import com.tlgbltcn.jetrivia.data.model.Trivia
-import com.tlgbltcn.jetrivia.util.ResultHolder
-import com.tlgbltcn.jetrivia.util.failure
-import com.tlgbltcn.jetrivia.util.loading
-import com.tlgbltcn.jetrivia.util.success
+import com.tlgbltcn.jetrivia.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
@@ -18,7 +15,7 @@ class TriviaViewModel @Inject constructor(private val repository: TriviaReposito
 
     private var job: Job? = null
 
-    private var _trivia = MutableStateFlow<ResultHolder<Trivia>>(ResultHolder.Loading)
+    private var _trivia = MutableStateFlow<ResultHolder<Trivia>>(Loading)
     val trivia = _trivia.asStateFlow()
 
     private var _isComplete = MutableStateFlow(false)
@@ -41,15 +38,15 @@ class TriviaViewModel @Inject constructor(private val repository: TriviaReposito
         repository.fetchTrivia()
             .collect {
                 when (it) {
-                    is ResultHolder.Loading -> {
-                        _trivia.value = loading()
+                    is Loading -> {
+                        _trivia.value = Loading
                     }
 
-                    is ResultHolder.Failure -> {
-                        _trivia.value = failure(it.message)
+                    is Failure -> {
+                        _trivia.value = Failure(it.message)
                     }
 
-                    is ResultHolder.Success -> {
+                    is Success -> {
                         triviaList.addAll(it.data.triviaList)
                         getNextQuestion()
                     }
@@ -59,7 +56,7 @@ class TriviaViewModel @Inject constructor(private val repository: TriviaReposito
 
     fun getNextQuestion() {
         if (index < questionBoundary) {
-            _trivia.value = success(triviaList[index])
+            _trivia.value = Success(triviaList[index])
             index++
             startTimer()
         } else {
@@ -102,7 +99,7 @@ class TriviaViewModel @Inject constructor(private val repository: TriviaReposito
     fun fiftyFifty() {
         val trivia = triviaList[index - 1]
         val restrictedList = trivia.incorrectAnswers.shuffled().subList(0, 1)
-        _trivia.value = success(
+        _trivia.value = Success(
             trivia.copy(incorrectAnswers = restrictedList)
         )
     }
