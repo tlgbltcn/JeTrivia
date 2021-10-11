@@ -6,7 +6,7 @@
 Fetching data from the network via repository pattern and saving them to local data source.</p>
 
 <p align="center">
-  <img src="https://media.giphy.com/media/AhYOYLPSCUv97niEXR/giphy.gif" alt="animated" />
+  <img src="https://media.giphy.com/media/bPTWd0sRms9sf2pwTP/giphy.gif" alt="animated" />
 </p>
 
 #### What Does JeTrivia consist of?
