@@ -16,7 +16,6 @@ fun MainView(
     actions: MainActions,
 ) {
 
-
     Scaffold(
         topBar = {
             TopAppBar(

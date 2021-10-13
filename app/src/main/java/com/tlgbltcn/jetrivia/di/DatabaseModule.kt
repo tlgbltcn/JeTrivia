@@ -29,13 +29,11 @@ object DatabaseModule {
     }
 
     @Provides
-    @Singleton
     fun providesRoundDao(database: TriviaDatabase): RoundDao {
         return database.roundDao()
     }
 
     @Provides
-    @Singleton
     fun providesTriviaDao(database: TriviaDatabase): TriviaDao {
         return database.triviaDao()
     }

@@ -11,9 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class TriviaRepository @Inject constructor(
     private val remoteService: TriviaService,
     private val roundDao: RoundDao,
@@ -87,3 +85,4 @@ class TriviaRepository @Inject constructor(
 
     fun getRounds(): List<RoundAndTrivia> = roundDao.getRoundsWithTrivia()
 }
+
