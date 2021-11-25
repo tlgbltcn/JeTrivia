@@ -2,8 +2,7 @@
 
 <p align="center"> 🚧  &nbsp;  In Progress &nbsp;  🚧 </p>
 
-<p align="center">The JeTrivia application is sample based on MVVM architecture.</br>
-Fetching data from the network via repository pattern and saving them to local data source.</p>
+<p align="center">The JeTrivia application is sample based on MVVM architecture that fetches data from the network via repository pattern and save them to local data source.</p>
 
 <p align="center">
   <img src="https://media.giphy.com/media/AhYOYLPSCUv97niEXR/giphy.gif" alt="animated" />
